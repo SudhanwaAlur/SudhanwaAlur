@@ -1,0 +1,86 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> vec;
+    bool check_symmetry(vector<int> vec)
+    {
+        int i=0;
+        int j=vec.size()-1;
+        for(i=0;i<vec.size()/2;i++)
+        {
+            cout<<"vec[i]"<<vec[i];
+            cout<<"vec[j]"<<vec[j];
+            if(vec[i]!=vec[j])
+            {
+                cout<<"FALSE\n";
+                return false;
+            }
+            j--;
+        }
+        cout<<"TRUE\n";
+        return true;
+    }
+    bool isSymmetric(TreeNode* root) {
+        cout<<"\nNewTescase\n";
+        if(root==NULL)
+            return false;
+        queue<TreeNode*> q;
+        q.push(root);
+        q.push(NULL);
+        while(q.size()>1)
+        {
+            TreeNode *curr=q.front();
+            q.pop();
+            if(curr==NULL)
+            {
+                cout<<"\n";
+                q.push(NULL);
+                if(check_symmetry(vec))
+                {
+                    vec.clear();
+                }
+                else
+                {
+                    vec.clear();
+                    return false;
+                }
+                continue;
+            }
+            if(curr->left!=NULL)
+            {
+                q.push(curr->left);
+                vec.push_back(curr->left->val);
+                cout<<curr->left->val;
+            }
+            else if(curr->left==NULL && curr->right!=NULL)
+            {
+                vec.push_back(-1);
+                cout<<"-1";
+            }
+            if(curr->right!=NULL)
+            {
+                q.push(curr->right);
+                vec.push_back(curr->right->val);
+                cout<<curr->right->val;
+            }
+            else if(curr->right==NULL && curr->left!=NULL)
+            {
+                vec.push_back(-1);
+                cout<<"-1";
+            }
+                
+        }
+        return true;
+        
+    }
+};

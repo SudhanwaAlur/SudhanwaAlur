@@ -1,0 +1,64 @@
+//My solution worked for 47/48 testcases. But failed for 48th testcase due to time limit exceed.
+
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+        vector<int> candies;
+        int totalCandies=0;
+        int i;
+        int n=ratings.size();
+        int criticalIndex;
+        if(n==1)
+        {
+            return 1;
+        }
+        if(ratings[0]>ratings[1])
+        {
+            candies.push_back(2);
+            criticalIndex=0;
+        }
+        else if(ratings[0]<ratings[1])
+            candies.push_back(1);
+        else
+        {
+            candies.push_back(1);
+            criticalIndex=0;
+        }
+        for(i=1;i<ratings.size();i++)
+        {
+           if(ratings[i]>ratings[i-1])
+           {
+               candies.push_back(candies[i-1]+1);
+               criticalIndex=i;
+           }
+           else if(ratings[i]<ratings[i-1])
+           {
+                if(candies[i-1]==1)
+                {
+                    int j;
+                    for(j=criticalIndex;j<i-1;j++)
+                    {
+                        if(candies[j]-candies[j+1]<=1)
+                            candies[j]+=1;
+                    }
+                    candies[j]+=1;
+                }
+                candies.push_back(1);
+            }
+            else
+            {
+                candies.push_back(1);
+                criticalIndex=i;
+            }
+            
+        }
+       // cout<<"critical "<<criticalIndex<<"..";
+        for(int k=0;k<candies.size();k++)
+        {
+            //cout<<candies[k]<<"\t";
+            totalCandies+=candies[k];
+        }
+        return totalCandies;
+        
+    }
+};
